@@ -2,48 +2,48 @@ package io.github.huangrenjie2002.datastructure.linear.linkedlist;
 
 import java.util.Iterator;
 
-public class DoublyLinkedListSentinel implements Iterable<Integer>{
+public class DoublyLinkedListSentinel<E> implements Iterable<E>{
 
-    private static class Node{
-        Node prev;
-        int val;
-        Node next;
+    private static class Node<E>{
+        Node<E> prev;
+        E val;
+        Node<E> next;
 
-        public Node(Node prev, int val, Node next) {
+        public Node(Node<E> prev, E val, Node<E> next) {
             this.prev = prev;
             this.val = val;
             this.next = next;
         }
     }
 
-    private Node head;
-    private Node tail;
+    private Node<E> head;
+    private Node<E> tail;
 
 
     public DoublyLinkedListSentinel(){
-        head = new Node(null,-1,null);
-        tail = new Node(null,-2,null);
+        head = new Node<E>(null,null,null);
+        tail = new Node<E>(null,null,null);
         head.next = tail;
         tail.prev = head;
     }
 
-    private Node findNode(int index){
+    private Node<E> findNode(int index){
         int i = -1;
-        for (Node p = head; p != tail; p = p.next, i++)
+        for (Node<E> p = head; p != tail; p = p.next, i++)
             if(i == index) return p;
         return null;
     }
 
-    public void addFirst(int val){
+    public void addFirst(E val){
         insert(0,val);
     }
 
     public void removeFirst(){
         remove(0);
     }
-    public void addLast(int val){
-        Node last = tail.prev;
-        Node added = new Node(last, val, tail);
+    public void addLast(E val){
+        Node<E> last = tail.prev;
+        Node<E> added = new Node<>(last, val, tail);
         last.next = added;
         tail.prev = added;
     }
@@ -54,18 +54,18 @@ public class DoublyLinkedListSentinel implements Iterable<Integer>{
         tail.prev.next = tail;
     }
 
-    public void insert(int index, int val){
-        Node prev = findNode(index - 1);
+    public void insert(int index, E val){
+        Node<E> prev = findNode(index - 1);
         if (prev == null)
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
-        Node next = prev.next;
-        Node inserted = new Node(prev, val, next);
+        Node<E> next = prev.next;
+        Node<E> inserted = new Node<>(prev, val, next);
         prev.next = inserted;
         next.prev = inserted;
     }
 
     public void remove(int index){
-        Node prev = findNode(index - 1);
+        Node<E> prev = findNode(index - 1);
         if (prev == null)
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
         if (prev.next == tail)
@@ -75,17 +75,18 @@ public class DoublyLinkedListSentinel implements Iterable<Integer>{
     }
 
     @Override
-    public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-            Node p = head.next;
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            Node<E> p = head.next;
+
             @Override
             public boolean hasNext() {
                 return p != tail;
             }
 
             @Override
-            public Integer next() {
-                int val = p.val;
+            public E next() {
+                E val = p.val;
                 p = p.next;
                 return val;
             }

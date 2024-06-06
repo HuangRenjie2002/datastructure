@@ -6,45 +6,45 @@ import java.util.function.Consumer;
 /**
  * 单向链表
  */
-public class SinglyLinkedList implements Iterable<Integer> {
+public class SinglyLinkedList<E> implements Iterable<E> {
 
-    private Node head = null;
+    private Node<E> head = null;
 
     /**
      * 节点类
      */
-    private static class Node {
-        int val;
-        Node next;
+    private static class Node<E> {
+        E val;
+        Node<E> next;
 
-        public Node(int val, Node next) {
+        public Node(E val, Node<E> next) {
             this.val = val;
             this.next = next;
         }
     }
 
-    public void addFirst(int val) {
-        head = new Node(val, head);
+    public void addFirst(E val) {
+        head = new Node<>(val, head);
     }
 
-    public void addLast(int val) {
-        Node last = findLast();
+    public void addLast(E val) {
+        Node<E> last = findLast();
         if (last == null) {
             addFirst(val);
             return;
         }
-        last.next = new Node(val, null);
+        last.next = new Node<>(val, null);
     }
 
-    public void insert(int index, int val) {
+    public void insert(int index, E val) {
         if (index == 0) {
             addFirst(val);
             return;
         }
-        Node prev = findNode(index - 1);
+        Node<E> prev = findNode(index - 1);
         if (prev == null)
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
-        prev.next = new Node(val, prev.next);
+        prev.next = new Node<>(val, prev.next);
     }
 
     public void removeFirst() {
@@ -58,7 +58,7 @@ public class SinglyLinkedList implements Iterable<Integer> {
             removeFirst();
             return;
         }
-        Node perv = findNode(index - 1);
+        Node<E> perv = findNode(index - 1);
         if (perv == null)
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
         if (perv.next == null)
@@ -73,16 +73,16 @@ public class SinglyLinkedList implements Iterable<Integer> {
      * @return 节点值
      * @throws IndexOutOfBoundsException
      */
-    public int get(int index) {
-        Node node = findNode(index);
+    public E get(int index) {
+        Node<E> node = findNode(index);
         if (node == null)
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
         return node.val;
     }
 
-    public Node findNode(int index) {
+    private Node<E> findNode(int index) {
         int i = 0;
-        for (Node p = head; p != null; p = p.next, i++)
+        for (Node<E> p = head; p != null; p = p.next, i++)
             if (i == index) return p;
         return null;
     }
@@ -92,8 +92,8 @@ public class SinglyLinkedList implements Iterable<Integer> {
      *
      * @param consumer 要执行的操作
      */
-    public void loop(Consumer<Integer> consumer) {
-        for (Node p = head; p != null; p = p.next)
+    public void loop(Consumer<E> consumer) {
+        for (Node<E> p = head; p != null; p = p.next)
             consumer.accept(p.val);
     }
 
@@ -108,19 +108,19 @@ public class SinglyLinkedList implements Iterable<Integer> {
      */
 
 
-    private Node findLast() {
+    private Node<E> findLast() {
         if (head == null)
             return null;
-        Node p = head;
+        Node<E> p = head;
         while (p.next != null)
             p = p.next;
         return p;
     }
 
     @Override
-    public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-            Node p = head;
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            Node<E> p = head;
 
             @Override
             public boolean hasNext() {
@@ -128,8 +128,8 @@ public class SinglyLinkedList implements Iterable<Integer> {
             }
 
             @Override
-            public Integer next() {
-                int val = p.val;
+            public E next() {
+                E val = p.val;
                 p = p.next;
                 return val;
             }

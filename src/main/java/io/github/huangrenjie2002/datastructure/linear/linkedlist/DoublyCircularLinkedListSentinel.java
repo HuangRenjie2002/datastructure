@@ -2,34 +2,34 @@ package io.github.huangrenjie2002.datastructure.linear.linkedlist;
 
 import java.util.Iterator;
 
-public class DoublyCircularLinkedListSentinel implements Iterable<Integer>{
+public class DoublyCircularLinkedListSentinel<E> implements Iterable<E>{
 
-    private static class Node{
-        Node prev;
-        int val;
-        Node next;
+    private static class Node<E>{
+        Node<E> prev;
+        E val;
+        Node<E> next;
 
-        public Node(Node prev, int val, Node next) {
+        public Node(Node<E> prev, E val, Node<E> next) {
             this.prev = prev;
             this.val = val;
             this.next = next;
         }
     }
 
-    private Node sentinel = new Node(null,-1,null);
+    private Node<E> sentinel = new Node<>(null,null,null);
 
     public DoublyCircularLinkedListSentinel() {
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
     }
 
-    public void addFirst(int val) {
-        sentinel.next = new Node(sentinel,val,sentinel.next);
+    public void addFirst(E val) {
+        sentinel.next = new Node<>(sentinel,val,sentinel.next);
         sentinel.next.prev = sentinel.next;
     }
 
-    public void addLast(int val) {
-        sentinel.prev.next = new Node(sentinel.prev,val,sentinel);
+    public void addLast(E val) {
+        sentinel.prev.next = new Node<>(sentinel.prev,val,sentinel);
         sentinel.prev = sentinel.prev.next;
     }
 
@@ -47,16 +47,16 @@ public class DoublyCircularLinkedListSentinel implements Iterable<Integer>{
         sentinel.prev.next = sentinel;
     }
 
-    public void removeByValue(int val) {
-        Node removed = findByValue(val);
+    public void removeByValue(E val) {
+        Node<E> removed = findByValue(val);
         if (removed == null)
             return;
         removed.prev.next = removed.next;
         removed.next.prev = removed.prev;
     }
 
-    private Node findByValue(int val) {
-        Node p = sentinel.next;
+    private Node<E> findByValue(E val) {
+        Node<E> p = sentinel.next;
         while (p!=sentinel){
             if (p.val == val)
                 return p;
@@ -66,17 +66,17 @@ public class DoublyCircularLinkedListSentinel implements Iterable<Integer>{
     }
 
     @Override
-    public Iterator<Integer> iterator() {
-        return new Iterator<Integer>() {
-            Node p = sentinel.next;
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            Node<E> p = sentinel.next;
             @Override
             public boolean hasNext() {
                 return p != sentinel;
             }
 
             @Override
-            public Integer next() {
-                int val = p.val;
+            public E next() {
+                E val = p.val;
                 p = p.next;
                 return val;
             }
