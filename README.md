@@ -1,2 +1,2 @@
-# algorithm
+# datastructure
 Common data structure
