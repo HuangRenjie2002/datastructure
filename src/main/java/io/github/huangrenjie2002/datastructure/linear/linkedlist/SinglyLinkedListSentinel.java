@@ -8,7 +8,7 @@ import java.util.function.Consumer;
  */
 public class SinglyLinkedListSentinel<E> implements Iterable<E> {
 
-    private Node<E> head = new Node<>(null, null);
+    private final Node<E> head = new Node<>(null, null);
 
     /**
      * 节点类

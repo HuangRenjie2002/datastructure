@@ -16,7 +16,7 @@ public class DoublyCircularLinkedListSentinel<E> implements Iterable<E>{
         }
     }
 
-    private Node<E> sentinel = new Node<>(null,null,null);
+    private final Node<E> sentinel = new Node<>(null,null,null);
 
     public DoublyCircularLinkedListSentinel() {
         sentinel.next = sentinel;

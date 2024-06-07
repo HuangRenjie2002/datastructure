@@ -16,8 +16,8 @@ public class DoublyLinkedListSentinel<E> implements Iterable<E>{
         }
     }
 
-    private Node<E> head;
-    private Node<E> tail;
+    private final Node<E> head;
+    private final Node<E> tail;
 
 
     public DoublyLinkedListSentinel(){
