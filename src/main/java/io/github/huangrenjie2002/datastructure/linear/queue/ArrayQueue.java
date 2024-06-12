@@ -27,6 +27,7 @@ public class ArrayQueue<E> implements Queue<E>, Iterable<E> {
         if (isEmpty())
             return null;
         E val = array[head];
+        array[head] = null;
         head = (head + 1) % array.length;
         return val;
     }
