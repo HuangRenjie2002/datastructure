@@ -1,4 +1,4 @@
-package io.github.huangrenjie2002.datastructure.linear.deque;
+package io.github.huangrenjie2002.datastructure.linear.queue.deque;
 
 import java.util.Iterator;
 
