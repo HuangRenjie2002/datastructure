@@ -4,10 +4,8 @@
 
     <groupId>io.github.huangrenjie2002</groupId>
     <artifactId>datastructure</artifactId>
-    <version>0.5.0</version>
+    <version>0.6.0</version>
     <packaging>jar</packaging>
-
-
 
     <name>datastructure</name>
     <description>Common data structure</description>
@@ -34,14 +32,12 @@
         <url>https://github.com/HuangRenjie2002/datastructure</url>
     </scm>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
     </properties>
-
 
     <build>
         <plugins>
