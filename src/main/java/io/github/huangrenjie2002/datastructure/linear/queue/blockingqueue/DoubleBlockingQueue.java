@@ -119,8 +119,4 @@ public class DoubleBlockingQueue<E> implements BlockingQueue<E> {
         return size.get() == array.length;
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(array);
-    }
 }

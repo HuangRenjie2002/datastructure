@@ -63,12 +63,10 @@ public class HeapPriorityQueue<E extends Priority> implements Queue<E> {
 
     private void down(int parent) {
         int left = 2 * parent + 1, right = left + 1, max = parent;
-        if (left < size && array[left].priority() > array[max].priority()) {
+        if (left < size && array[left].priority() > array[max].priority())
             max = left;
-        }
-        if (right < size && array[right].priority() > array[max].priority()) {
+        if (right < size && array[right].priority() > array[max].priority())
             max = right;
-        }
         if (max != parent) {
             swap(parent, max);
             down(max);

@@ -84,8 +84,4 @@ public class SingleBlockingQueue<E> implements BlockingQueue<E> {
         return size == array.length;
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(array);
-    }
 }
