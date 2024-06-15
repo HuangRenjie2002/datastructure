@@ -23,7 +23,8 @@ public class MaxHeap {
     }
 
     public int poll() {
-        //TODO size ==0
+        if (isEmpty())
+            throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
         int top = array[0];
         swap(0, size - 1);
         size--;
@@ -32,7 +33,8 @@ public class MaxHeap {
     }
 
     public int poll(int index) {
-        //TODO size ==0
+        if (isEmpty())
+            throw new IndexOutOfBoundsException(String.format("Index: %d", index));
         int deleted = array[index];
         swap(index, size - 1);
         size--;
@@ -46,16 +48,24 @@ public class MaxHeap {
     }
 
     public int peek() {
-        //TODO size ==0
+        if (isEmpty())
+            throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
         return array[0];
     }
 
     public boolean offer(int offered) {
-        if (size == array.length)
+        if (isFull())
             return false;
         up(offered);
         size++;
         return true;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    public boolean isFull() {
+        return size == array.length;
     }
 
     private void up(int offered) {
