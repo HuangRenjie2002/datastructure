@@ -1,18 +1,19 @@
 package io.github.huangrenjie2002.datastructure.tree.heap;
 
-import io.github.huangrenjie2002.datastructure.linear.queue.priority.Priority;
-
-public class MaxHeap {
+public class Heap {
     int[] array;
     int size;
+    boolean max;
 
-    public MaxHeap(int capacity) {
+    public Heap(int capacity, boolean max) {
         this.array = new int[capacity];
+        this.max = max;
     }
 
-    public MaxHeap(int[] array) {
+    public Heap(int[] array, boolean max) {
         this.array = array;
         this.size = array.length;
+        this.max = max;
         heapify();
     }
 
@@ -53,12 +54,18 @@ public class MaxHeap {
         return array[0];
     }
 
-    public boolean offer(int offered) {
+    public void offer(int offered) {
         if (isFull())
-            return false;
+            grow();
         up(offered);
         size++;
-        return true;
+    }
+
+    private void grow() {
+        int capacity = size + (size >> 1);
+        int[] newArray = new int[capacity];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
     }
 
     public boolean isEmpty() {
@@ -73,7 +80,7 @@ public class MaxHeap {
         int child = size;
         while (child > 0) {
             int parent = (child - 1) / 2;
-            if (offered > array[parent])
+            if (max ? offered > array[parent] : offered < array[parent])
                 array[child] = array[parent];
             else
                 break;
@@ -84,14 +91,14 @@ public class MaxHeap {
 
 
     private void down(int parent) {
-        int left = 2 * parent + 1, right = left + 1, max = parent;
-        if (left < size && array[left] > array[max])
-            max = left;
-        if (right < size && array[right] > array[max])
-            max = right;
-        if (max != parent) {
-            swap(parent, max);
-            down(max);
+        int left = 2 * parent + 1, right = left + 1, maxOrMin = parent;
+        if (left < size && max ? array[left] > array[maxOrMin] : array[left] < array[maxOrMin])
+            maxOrMin = left;
+        if (right < size && max ? array[right] > array[maxOrMin] : array[right] < array[maxOrMin])
+            maxOrMin = right;
+        if (maxOrMin != parent) {
+            swap(parent, maxOrMin);
+            down(maxOrMin);
         }
     }
 

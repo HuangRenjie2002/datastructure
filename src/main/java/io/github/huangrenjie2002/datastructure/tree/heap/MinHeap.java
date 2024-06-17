@@ -1,16 +1,14 @@
 package io.github.huangrenjie2002.datastructure.tree.heap;
 
-import io.github.huangrenjie2002.datastructure.linear.queue.priority.Priority;
-
-public class MaxHeap {
+public class MinHeap {
     int[] array;
     int size;
 
-    public MaxHeap(int capacity) {
+    public MinHeap(int capacity) {
         this.array = new int[capacity];
     }
 
-    public MaxHeap(int[] array) {
+    public MinHeap(int[] array) {
         this.array = array;
         this.size = array.length;
         heapify();
@@ -73,7 +71,7 @@ public class MaxHeap {
         int child = size;
         while (child > 0) {
             int parent = (child - 1) / 2;
-            if (offered > array[parent])
+            if (offered < array[parent])
                 array[child] = array[parent];
             else
                 break;
@@ -84,14 +82,14 @@ public class MaxHeap {
 
 
     private void down(int parent) {
-        int left = 2 * parent + 1, right = left + 1, max = parent;
-        if (left < size && array[left] > array[max])
-            max = left;
-        if (right < size && array[right] > array[max])
-            max = right;
-        if (max != parent) {
-            swap(parent, max);
-            down(max);
+        int left = 2 * parent + 1, right = left + 1, min = parent;
+        if (left < size && array[left] < array[min])
+            min = left;
+        if (right < size && array[right] < array[min])
+            min = right;
+        if (min != parent) {
+            swap(parent, min);
+            down(min);
         }
     }
 
