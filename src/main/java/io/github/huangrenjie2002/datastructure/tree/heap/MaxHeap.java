@@ -1,16 +1,15 @@
 package io.github.huangrenjie2002.datastructure.tree.heap;
 
-import io.github.huangrenjie2002.datastructure.linear.queue.priority.Priority;
-
-public class MaxHeap {
-    int[] array;
+public class MaxHeap<E extends Comparable<E>> {
+    E[] array;
     int size;
 
+    @SuppressWarnings("all")
     public MaxHeap(int capacity) {
-        this.array = new int[capacity];
+        this.array = (E[]) new Object[capacity];
     }
 
-    public MaxHeap(int[] array) {
+    public MaxHeap(E[] array) {
         this.array = array;
         this.size = array.length;
         heapify();
@@ -22,38 +21,38 @@ public class MaxHeap {
         }
     }
 
-    public int poll() {
+    public E poll() {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
-        int top = array[0];
+        E top = array[0];
         swap(0, size - 1);
         size--;
         down(0);
         return top;
     }
 
-    public int poll(int index) {
+    public E poll(int index) {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
-        int deleted = array[index];
+        E deleted = array[index];
         swap(index, size - 1);
         size--;
         down(index);
         return deleted;
     }
 
-    public void replaceTop(int replaced) {
+    public void replaceTop(E replaced) {
         array[0] = replaced;
         down(0);
     }
 
-    public int peek() {
+    public E peek() {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
         return array[0];
     }
 
-    public boolean offer(int offered) {
+    public boolean offer(E offered) {
         if (isFull())
             return false;
         up(offered);
@@ -69,11 +68,11 @@ public class MaxHeap {
         return size == array.length;
     }
 
-    private void up(int offered) {
+    private void up(E offered) {
         int child = size;
         while (child > 0) {
             int parent = (child - 1) / 2;
-            if (offered > array[parent])
+            if (offered.compareTo(array[child]) < 0)
                 array[child] = array[parent];
             else
                 break;
@@ -85,9 +84,10 @@ public class MaxHeap {
 
     private void down(int parent) {
         int left = 2 * parent + 1, right = left + 1, max = parent;
-        if (left < size && array[left] > array[max])
+
+        if (left < size && array[left].compareTo(array[max]) > 0)
             max = left;
-        if (right < size && array[right] > array[max])
+        if (right < size && array[right].compareTo(array[max]) > 0)
             max = right;
         if (max != parent) {
             swap(parent, max);
@@ -96,7 +96,7 @@ public class MaxHeap {
     }
 
     private void swap(int i, int j) {
-        int t = array[i];
+        E t = array[i];
         array[i] = array[j];
         array[j] = t;
     }

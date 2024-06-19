@@ -1,16 +1,17 @@
 package io.github.huangrenjie2002.datastructure.tree.heap;
 
-public class Heap {
-    int[] array;
+public class Heap<E extends Comparable<E>> {
+    E[] array;
     int size;
     boolean max;
 
+    @SuppressWarnings("all")
     public Heap(int capacity, boolean max) {
-        this.array = new int[capacity];
+        this.array = (E[]) new Object[capacity];
         this.max = max;
     }
 
-    public Heap(int[] array, boolean max) {
+    public Heap(E[] array, boolean max) {
         this.array = array;
         this.size = array.length;
         this.max = max;
@@ -23,47 +24,48 @@ public class Heap {
         }
     }
 
-    public int poll() {
+    public E poll() {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
-        int top = array[0];
+        E top = array[0];
         swap(0, size - 1);
         size--;
         down(0);
         return top;
     }
 
-    public int poll(int index) {
+    public E poll(int index) {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", index));
-        int deleted = array[index];
+        E deleted = array[index];
         swap(index, size - 1);
         size--;
         down(index);
         return deleted;
     }
 
-    public void replaceTop(int replaced) {
+    public void replaceTop(E replaced) {
         array[0] = replaced;
         down(0);
     }
 
-    public int peek() {
+    public E peek() {
         if (isEmpty())
             throw new IndexOutOfBoundsException(String.format("Index: %d", 0));
         return array[0];
     }
 
-    public void offer(int offered) {
+    public void offer(E offered) {
         if (isFull())
             grow();
         up(offered);
         size++;
     }
 
+    @SuppressWarnings("all")
     private void grow() {
         int capacity = size + (size >> 1);
-        int[] newArray = new int[capacity];
+        E[] newArray = (E[]) new Object[capacity];
         System.arraycopy(array, 0, newArray, 0, size);
         array = newArray;
     }
@@ -76,11 +78,11 @@ public class Heap {
         return size == array.length;
     }
 
-    private void up(int offered) {
+    private void up(E offered) {
         int child = size;
         while (child > 0) {
             int parent = (child - 1) / 2;
-            if (max ? offered > array[parent] : offered < array[parent])
+            if (max ? offered.compareTo(array[parent]) > 0 : offered.compareTo(array[parent]) < 0)
                 array[child] = array[parent];
             else
                 break;
@@ -92,9 +94,9 @@ public class Heap {
 
     private void down(int parent) {
         int left = 2 * parent + 1, right = left + 1, maxOrMin = parent;
-        if (left < size && max ? array[left] > array[maxOrMin] : array[left] < array[maxOrMin])
+        if (left < size && max ? array[left].compareTo(array[maxOrMin]) > 0 : array[left].compareTo(array[maxOrMin]) < 0)
             maxOrMin = left;
-        if (right < size && max ? array[right] > array[maxOrMin] : array[right] < array[maxOrMin])
+        if (right < size && max ? array[right].compareTo(array[maxOrMin]) > 0 : array[right].compareTo(array[maxOrMin]) < 0)
             maxOrMin = right;
         if (maxOrMin != parent) {
             swap(parent, maxOrMin);
@@ -103,7 +105,7 @@ public class Heap {
     }
 
     private void swap(int i, int j) {
-        int t = array[i];
+        E t = array[i];
         array[i] = array[j];
         array[j] = t;
     }
