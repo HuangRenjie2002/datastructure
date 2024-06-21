@@ -8,7 +8,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 
     private BSTNode<K, V> root;
 
-    public static class BSTNode<K, V> {
+    static class BSTNode<K, V> {
         K key;
         V val;
         BSTNode<K, V> left;
