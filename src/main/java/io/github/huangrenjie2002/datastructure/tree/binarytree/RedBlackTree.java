@@ -11,7 +11,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 
     private Node<K, V> root;
 
-    static class Node<K, V> {
+    private static class Node<K, V> {
         K key;
         V val;
         Node<K, V> left;
@@ -81,11 +81,11 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     private void rightRotate(Node<K, V> node) {
         Node<K, V> parent = node.parent;
         Node<K, V> left = node.left;
-        Node<K, V> right = node.right;
+        Node<K, V> right = left.right;
         if (right != null)
             right.parent = node;
         left.right = node;
-        left.parent = node.parent;
+        left.parent = parent;
         node.left = right;
         node.parent = left;
         if (parent == null)
@@ -98,16 +98,16 @@ public class RedBlackTree<K extends Comparable<K>, V> {
 
     private void leftRotate(Node<K, V> node) {
         Node<K, V> parent = node.parent;
-        Node<K, V> left = node.left;
         Node<K, V> right = node.right;
+        Node<K, V> left = right.left;
         if (left != null)
             left.parent = node;
         right.left = node;
-        right.parent = node.parent;
+        right.parent = parent;
         node.right = left;
         node.parent = right;
         if (parent == null)
-            root = left;
+            root = right;
         else if (parent.right == node)
             parent.right = right;
         else
@@ -128,7 +128,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
                 return;
             }
         }
-        Node<K, V> inserted = new Node<K, V>(key, val);
+        Node<K, V> inserted = new Node<>(key, val);
         if (parent == null)
             root = inserted;
         else if (key.compareTo(parent.key) < 0) {
@@ -139,7 +139,6 @@ public class RedBlackTree<K extends Comparable<K>, V> {
             inserted.parent = parent;
         }
         fixRedRed(inserted);
-
     }
 
     public void remove(K key) {
@@ -269,7 +268,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     }
 
 
-    void fixRedRed(Node<K, V> node) {
+    private void fixRedRed(Node<K, V> node) {
         if (node == root) {
             node.color = BLACK;
             return;
@@ -306,6 +305,22 @@ public class RedBlackTree<K extends Comparable<K>, V> {
             leftRotate(grandparent);
         }
     }
+    public boolean contains(K key) {
+        return find(key) != null;
+    }
 
+    public V get(K key) {
+        Node<K, V> node = root;
+        while (node != null) {
+            int res = key.compareTo(node.key);
+            if (res < 0)
+                node = node.left;
+            else if (res > 0)
+                node = node.right;
+            else
+                return node.val;
+        }
+        return null;
+    }
 
 }
