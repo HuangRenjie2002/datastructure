@@ -2,9 +2,9 @@ package io.github.huangrenjie2002.datastructure.tree.binarytree;
 
 public class AVLTree<K extends Comparable<K>, V> {
 
-    AVLNode<K, V> root;
+    private AVLNode<K, V> root;
 
-    static class AVLNode<K, V> {
+    private static class AVLNode<K, V> {
         K key;
         V val;
         AVLNode<K, V> left;

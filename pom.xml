@@ -4,7 +4,7 @@
 
     <groupId>io.github.huangrenjie2002</groupId>
     <artifactId>datastructure</artifactId>
-    <version>0.8.3</version>
+    <version>0.9.0</version>
     <packaging>jar</packaging>
 
     <name>datastructure</name>
@@ -38,6 +38,15 @@
         <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
     </properties>
+
+    <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.8.2</version>
+                <scope>test</scope>
+            </dependency>
+    </dependencies>
 
     <build>
         <plugins>
